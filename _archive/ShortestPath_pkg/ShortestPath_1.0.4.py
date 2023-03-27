@@ -35,17 +35,17 @@ doors_json = 'data-input/dev-data/door-data-03.json'
 
 
 def main():
-    """NWX GRAPH 1 - BOUNDARY GRAPH"""
-    bdry_g = nx.Graph()
-    # add nodes into boundary graph from file
-    new_add_nodes_to_graph(bdry_g, boundary_json)
-    edgeloop_from_graph_points(bdry_g)
-    # below just makes coordinates for printing
-    bdry_g_node_pos = {node[0] : node[1]['pos'] for node in bdry_g.nodes(data=True)}
-    #bdry_g_node_pos = {node[0] : (node[1]['pos'][0], node[1]['pos'][1])  for node in bdry_g.nodes(data=True)}
+    # """NWX GRAPH 1 - BOUNDARY GRAPH"""
+    # bdry_g = nx.Graph()
+    # # add nodes into boundary graph from file
+    # new_add_nodes_to_graph(bdry_g, boundary_json)
+    # edgeloop_from_graph_points(bdry_g)
+    # # below just makes coordinates for printing
+    # bdry_g_node_pos = {node[0] : node[1]['pos'] for node in bdry_g.nodes(data=True)}
+    # #bdry_g_node_pos = {node[0] : (node[1]['pos'][0], node[1]['pos'][1])  for node in bdry_g.nodes(data=True)}
 
 
-    #bdry_g.add_edges_from(make_edgeloop(bdry_g_node_pos))
+    # #bdry_g.add_edges_from(make_edgeloop(bdry_g_node_pos))
 
 
     """NWX GRAPH 2 - INTERCONNECTIVITY GRAPH"""
