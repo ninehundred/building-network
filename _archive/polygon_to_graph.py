@@ -1,20 +1,9 @@
-import itertools
-
-import networkx
 import shapely.wkt
-from matplotlib import pyplot as plt
-from libpysal import weights
-import networkx as nx
-import geopandas as gpd
-import momepy
-from shapely import Polygon
 
 from _archive.utils.SpeckleDataHandler import SpeckleDataHandler
 from _archive.utils.geometries import get_cutter
 from _archive.download_data import load_local_data
-from models.Building import Building
-from _archive.utils.tools import plot_any
-import numpy as np
+from _archive.models import Building
 
 level = "02"
 

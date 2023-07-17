@@ -1,7 +1,7 @@
 import shapely
 from shapely import Polygon, unary_union
 import shapely.affinity
-from models.Building import Building
+from _archive.models import Building
 
 
 def build_polygons(building: Building, floor_label: str):
@@ -43,5 +43,6 @@ def construct_cutter(building: Building, floor_label: str):
 
     un_rm = unary_union(rooms)
     un_dr = unary_union(doors)
+    un = unary_union([un_rm, un_dr])
 
-    return unary_union([un_rm, un_dr])
+    return un

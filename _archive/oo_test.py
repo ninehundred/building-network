@@ -1,12 +1,11 @@
-import networkx
 from matplotlib import pyplot as plt
 import networkx as nx
 from shapely import LineString
 
 from utils.SpeckleDataHandler import SpeckleDataHandler
-from utils.geometries import construct_cutter, build_polygons, get_cutter
+from utils.geometries import construct_cutter
 from _archive.download_data import load_local_data
-from models.Building import Building
+from _archive.models import Building
 from utils.tools import plot_any
 import math
 import colorsys

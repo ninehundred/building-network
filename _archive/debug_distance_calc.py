@@ -4,7 +4,7 @@ from shapely import MultiPolygon, Polygon
 from _archive.download_data import load_local_data
 from _archive.utils.tools import plot_any
 from utils.SpeckleDataHandler import SpeckleDataHandler
-from models.Building import Building, Door
+from _archive.models import Building, Door
 import networkx as nx
 from oo_test import calculate_distance
 from utils.geometries import construct_cutter

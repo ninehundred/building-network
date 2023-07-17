@@ -29,7 +29,7 @@ room_exit_points_file = 'data-input/dev-data/RoomExitPoints'
 room_boundary_points_file = 'data-input/dev-data/RoomBoundaryPoints'
 final_exit_points_file = 'data-input/dev-data/FinalExitPoints'
 
-#boundary_json = 'data-input/dev-data/boundary-data.json'
+boundary_json = 'data-input/dev-data/boundary-data.json'
 rooms_json = 'data-input/dev-data/room-data-02.json'
 doors_json = 'data-input/dev-data/door-data-03.json'
 

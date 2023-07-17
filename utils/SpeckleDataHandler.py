@@ -1,9 +1,7 @@
 import shapely.affinity
 from shapely import Point
-import specklepy
-import pprint
 
-from models.Building import Building, Room, Door
+from _archive.models import Building, Room, Door
 from shapely import Polygon
 
 

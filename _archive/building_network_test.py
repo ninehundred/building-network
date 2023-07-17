@@ -1,6 +1,6 @@
 from BuildNetwork import BuildNetwork
 from _archive.download_data import load_local_data
-from models.Building import Building
+from _archive.models.Building import Building
 from utils.SpeckleDataHandler import SpeckleDataHandler
 
 
@@ -18,7 +18,8 @@ def main():
     bn.compute_all_edges()
     bn.remove_intersecting_edges()
     bn.add_room_centroids()
-    bn.plot_all_paths()
+    bn.plot_all_paths(normalise=25)
+    # bn.plot_single_path(normalise=25, start_node_index=1)
 
     return
 
