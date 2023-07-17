@@ -1,17 +1,16 @@
 import shapely.affinity
 from shapely import Point
 
-from _archive.models import Building, Room, Door
+from models.Building import Building, Room, Door
 from shapely import Polygon
 
 
 class SpeckleDataHandler:
-    data: []
-    rooms: []
     door_tolerance = 10
 
     # temporary measure to identify stair-well doors until speckle can load door data
     # these are the elementId parameters
+    # needs a way of identifying door type
     exit_doors = {"936092", "935699", "935389", "934706"}
 
     def __init__(self, data):
@@ -23,6 +22,7 @@ class SpeckleDataHandler:
     def process_doors(self, building: Building):
         for door in self.doors:
 
+            # flatten x,y,z data to get door perimeter
             coordinates = []
             x = door.basePoint.x
             y = door.basePoint.y
@@ -30,6 +30,7 @@ class SpeckleDataHandler:
             depth = 120
             offset = width/2
 
+            # TODO check if there is a convex hull method
             coordinates.append([x-offset, y-depth])
             coordinates.append([x+offset, y-depth])
             coordinates.append([x+offset, y+depth])
@@ -45,6 +46,9 @@ class SpeckleDataHandler:
             if door["elementId"] in self.exit_doors:
                 _type = "exit"
 
+            polygon = Polygon(coordinates)
+            polygon = shapely.affinity.rotate(polygon, door.rotation, use_radians=True, origin='centroid')
+
             building.doors.append(
                 Door(
                     coordinates=coordinates,
@@ -52,7 +56,7 @@ class SpeckleDataHandler:
                     rotation=door.rotation,
                     centroid=[x, y],
                     type=_type,
-                    polygon=Polygon(coordinates),
+                    polygon=polygon,
                     upper_centroid=[upper_centroid.x, upper_centroid.y],
                     lower_centroid=[lower_centroid.x, lower_centroid.y]
 

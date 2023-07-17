@@ -1,15 +1,15 @@
 import shapely.wkt
 
-from _archive.utils.SpeckleDataHandler import SpeckleDataHandler
-from _archive.utils.geometries import get_cutter
-from _archive.download_data import load_local_data
-from _archive.models import Building
+from utils import SpeckleDataHandler
+from utils import get_cutter
+from utils.download_data import load_local_data
+from models import Building
 
 level = "02"
 
 
 def main():
-    data = load_local_data("building_data.pkl")
+    data = load_local_data("pickles_and_hard_data/building_data.pkl")
     spek = SpeckleDataHandler(data)
     building = Building()
 
