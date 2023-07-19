@@ -1,13 +1,13 @@
 from matplotlib import pyplot as plt
 from shapely import MultiPolygon, Polygon
 
-from utils.download_data import load_local_data
-from utils.tools import plot_any
-from utils.SpeckleDataHandler import SpeckleDataHandler
-from models import Building, Door
+from lib.utils.download_data import load_local_data
+from lib.utils import plot_any
+from lib.utils.SpeckleDataHandler import SpeckleDataHandler
+from lib.models import Building, Door
 import networkx as nx
 from oo_test import calculate_distance
-from utils.geometries import construct_cutter
+from lib.utils.geometries import construct_cutter
 
 
 def find_intersecting_doors(room: Polygon, doors: list[Door], level: str) -> list[Door]:

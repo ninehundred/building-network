@@ -1,4 +1,4 @@
-from building_networker import __version__
+from lib.building_networker import __version__
 
 
 def test_version():

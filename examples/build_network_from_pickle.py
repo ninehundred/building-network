@@ -1,7 +1,7 @@
-from Build_network.BuildNetwork import BuildNetwork
-from utils.download_data import load_local_data
-from models.Building import Building
-from utils.SpeckleDataHandler import SpeckleDataHandler
+from lib.build_network.BuildNetwork import BuildNetwork
+from lib.utils.download_data import load_local_data
+from lib.models.Building import Building
+from lib.utils.SpeckleDataHandler import SpeckleDataHandler
 
 
 def main():
@@ -20,7 +20,6 @@ def main():
     bn.add_room_centroids()
     bn.plot_all_paths(normalise=25)
     # bn.plot_single_path(normalise=25, start_node_index=1)
-
     return
 
 

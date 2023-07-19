@@ -1,9 +1,9 @@
 import shapely.wkt
 
-from utils import SpeckleDataHandler
-from utils import get_cutter
-from utils.download_data import load_local_data
-from models import Building
+from lib.utils import SpeckleDataHandler
+from lib.utils import get_cutter
+from lib.utils.download_data import load_local_data
+from lib.models import Building
 
 level = "02"
 
