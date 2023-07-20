@@ -46,6 +46,10 @@ class BuildNetwork:
                     self.exit_nodes.append(str(door[0]))
 
     def get_furthest_node_from_door(self, room: Room, intersecting_doors: list):
+        # XXX: we can use single_source_dijkstra_path_length to get all the direct path
+        #  lengths from a node and then pick the one with the greatest path length
+        #   to get the furthest node from a door using the direct route
+        #  may need to tell it to be picky about room names or something
         maxes = [-1.0, "node"]
         for coordinate in enumerate(room.coordinates):
             for intersecting_door in intersecting_doors:
