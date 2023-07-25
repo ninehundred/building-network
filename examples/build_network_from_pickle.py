@@ -5,7 +5,7 @@ from lib.utils.SpeckleDataHandler import SpeckleDataHandler
 
 
 def main():
-    data = load_local_data("../_archive/pickles_and_hard_data/building_data.pkl")
+    data = load_local_data(r"building_data.pkl")
     building = Building()
 
     spek = SpeckleDataHandler(data)

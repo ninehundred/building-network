@@ -8,6 +8,8 @@ from lib.models.Building import Building, Room, Door
 from lib.utils.geometries import construct_cutter
 from lib.utils.tools import plot_any
 
+from dataclasses import field
+
 
 class BuildNetwork:
 
@@ -15,8 +17,8 @@ class BuildNetwork:
         self.edge_graph: nx.Graph
         self.building = building
         self.graph = nx.Graph()
-        self.start_nodes = []
-        self.exit_nodes = []
+        self.start_nodes = field(default_factory=list)
+        self.exit_nodes = field(default_factory=list)
         self.level = level
         self.cutter = construct_cutter(building, self.level)
 
