@@ -26,7 +26,7 @@ def find_intersecting_doors(room: Polygon, doors: list[Door], level: str) -> lis
 def main():
     level = "01"
     test_room = "17"
-    data = load_local_data("pickles_and_hard_data/building_data.pkl")
+    data = load_local_data("../examples/building_data.pkl")
     spek = SpeckleDataHandler(data)
     building = Building()
 

@@ -1,3 +1,6 @@
+import os
+import pickle
+
 from lib.build_network.BuildNetwork import BuildNetwork
 from lib.utils.download_data import load_local_data
 from lib.models.Building import Building
@@ -5,7 +8,10 @@ from lib.utils.SpeckleDataHandler import SpeckleDataHandler
 
 
 def main():
-    data = load_local_data("../_archive/pickles_and_hard_data/building_data.pkl")
+    print(os.listdir())
+    with open(r"_archive\pickles_and_hard_data\building_data.pkl", 'rb') as read:
+        data = pickle.load(read)
+    # data = load_local_data("building_data.pkl")
     building = Building()
 
     spek = SpeckleDataHandler(data)
