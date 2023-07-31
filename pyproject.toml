@@ -8,9 +8,15 @@ packages = [{include = "examples"}]
 [tool.poetry.dependencies]
 python = "^3.10"
 matplotlib = "^3.5.3"
+<<<<<<< HEAD
 Shapely = "^2.0.0"
 networkx = "3.1"
 specklepy = "2.15.2"
+=======
+networkx = "^3.1"
+shapely = "^2.0.1"
+specklepy = "^2.15.1"
+>>>>>>> 4db7886a027be65abe4760a95c79d9fa1c33d4d7
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

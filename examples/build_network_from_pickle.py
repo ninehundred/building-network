@@ -8,10 +8,14 @@ from lib.utils.SpeckleDataHandler import SpeckleDataHandler
 
 
 def main():
+<<<<<<< HEAD
     print(os.listdir())
     with open(r"_archive\pickles_and_hard_data\building_data.pkl", 'rb') as read:
         data = pickle.load(read)
     # data = load_local_data("building_data.pkl")
+=======
+    data = load_local_data(r"building_data.pkl")
+>>>>>>> 4db7886a027be65abe4760a95c79d9fa1c33d4d7
     building = Building()
 
     spek = SpeckleDataHandler(data)

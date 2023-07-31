@@ -8,6 +8,8 @@ from lib.models.Building import Building, Room, Door
 from lib.utils.geometries import construct_cutter
 from lib.utils.tools import plot_any
 
+from dataclasses import field
+
 
 class BuildNetwork:
 
@@ -15,8 +17,8 @@ class BuildNetwork:
         self.edge_graph: nx.Graph
         self.building = building
         self.graph = nx.Graph()
-        self.start_nodes = []
-        self.exit_nodes = []
+        self.start_nodes = field(default_factory=list)
+        self.exit_nodes = field(default_factory=list)
         self.level = level
         self.cutter = construct_cutter(building, self.level)
 
@@ -46,6 +48,10 @@ class BuildNetwork:
                     self.exit_nodes.append(str(door[0]))
 
     def get_furthest_node_from_door(self, room: Room, intersecting_doors: list):
+        # XXX: we can use single_source_dijkstra_path_length to get all the direct path
+        #  lengths from a node and then pick the one with the greatest path length
+        #   to get the furthest node from a door using the direct route
+        #  may need to tell it to be picky about room names or something
         maxes = [-1.0, "node"]
         for coordinate in enumerate(room.coordinates):
             for intersecting_door in intersecting_doors:
