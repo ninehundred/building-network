@@ -17,8 +17,8 @@ class BuildNetwork:
         self.edge_graph: nx.Graph
         self.building = building
         self.graph = nx.Graph()
-        self.start_nodes = field(default_factory=list)
-        self.exit_nodes = field(default_factory=list)
+        self.start_nodes = []
+        self.exit_nodes = []
         self.level = level
         self.cutter = construct_cutter(building, self.level)
 

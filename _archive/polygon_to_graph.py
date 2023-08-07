@@ -9,7 +9,7 @@ level = "02"
 
 
 def main():
-    data = load_local_data("../examples/building_data.pkl")
+    data = load_local_data("pickles_and_hard_data/building_data.pkl")
     spek = SpeckleDataHandler(data)
     building = Building()
 

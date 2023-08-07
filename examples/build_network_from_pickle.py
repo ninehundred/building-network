@@ -11,7 +11,6 @@ def main():
     print(os.listdir())
     with open(r"_archive\pickles_and_hard_data\building_data.pkl", 'rb') as read:
         data = pickle.load(read)
-    # data = load_local_data("building_data.pkl")
     building = Building()
 
     spek = SpeckleDataHandler(data)
