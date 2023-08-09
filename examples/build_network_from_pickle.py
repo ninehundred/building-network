@@ -8,8 +8,9 @@ from lib.utils.SpeckleDataHandler import SpeckleDataHandler
 
 
 def main():
+    print(f"THE CURRENT WORKING DIRECTORY IS............\n {os.getcwd()}")
     print(os.listdir())
-    with open(r"_archive\pickles_and_hard_data\building_data.pkl", 'rb') as read:
+    with open(r"examples\building_data.pkl", 'rb') as read:
         data = pickle.load(read)
     building = Building()
 
