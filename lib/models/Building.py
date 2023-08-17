@@ -12,11 +12,6 @@ class Room:
     polygon: Polygon = Polygon()
     start: bool = False
 
-    # def __init__(self, coordinates, level, id):
-    #     self.coordinates = coordinates
-    #     self.level = level
-    #     self.id = id
-
 
 @dataclass
 class Door:
@@ -24,31 +19,34 @@ class Door:
     centroid: list = field(default_factory=list)
     upper_centroid: list = field(default_factory=list)
     lower_centroid: list = field(default_factory=list)
+    # XXX: this should be a GUID
     room: str = field(default_factory=set)
-    id: str = ''
+    # XXX: This should also be a GUID to associate to the correct level
     level: str = ''
     rotation: float = 0.0
-    # XXX: is this a set of two room ID's?
-    # identify if door leads to a stairwell
-    type: str = 'norm'
+    # TODO: add adjacent room id's so that we can associate the door properly
+    type: str = ''
     polygon: Polygon = Polygon()
-
-
-@dataclass
-class Floor:
-    Rooms: list[Room]
     id: str = ''
-    """ XXX: why does the floor have room objects as well
-        as the building? shouldnt the building have floors,
-        and on the floors there are rooms?
-    """
+
+# WIP: renamed to Level as floor is an object that should be associated with a level
+@dataclass
+class Level:
+    #  WIP: added the room dataclass and the doors dataclass to the floor dataclass
+    #   for better heirarchical structure of the over all dataclass
+    level_id: str = field(default_factory=str)
+    level_name: str = field(default_factory=str)
+    level_elevation: str = field(default_factory=str)
+    rooms: list[Room] = field(default_factory=list) 
+    doors: list[Door] = field(default_factory=list)
+    id: str = ''
 
 
 @dataclass
 class Building:
-    # floors should be a dict
-    # {"<floor_id>": dict(rooms)}
+    # WIP: updated floors instance variable to a dict containing a 
+    #  string of the floor id and then the floor object itself
+    #  NOTE: the floor id should be a string represented by a GUID
+    levels: dict[str, Level] = field(default_factory=dict)
     id: str = ''
-    floors: list[Floor] = field(default_factory=set)
-    rooms: list[Room] = field(default_factory=list) 
-    doors: list[Door] = field(default_factory=list)
+    
