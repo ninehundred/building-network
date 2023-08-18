@@ -1,7 +1,7 @@
 import shapely.affinity
 from shapely import Point
 
-from lib.models.Building import Building, Room, Door
+from lib.models.Building import Building, Room, Door, Level
 from shapely import Polygon
 
 
@@ -21,25 +21,18 @@ class SpeckleDataHandler:
 
     def process_levels(self, building:Building):
         for room in self.data["@Rooms"]:
-            # print(x['level'].__dict__)
-            # print(room.level.parameters.__dict__)
-            # print()
             level_id = room.level.id
-            print(level_id)
             level_name = room.name
             level_elevation = room.level.elevation
-            # if any of the levels in the buildings level list have the level ID that is about to be added then move on
-            # print(f'about to check if there are any levels in the dict...\n{building.levels}')
-            # if level_id in building.levels:
-            #     print(f'this level {level_id} already exists, moving on...')
-            # else:
-            #     print('this level does not exist, adding id and level dataclass...')
-    
+            if level_id not in building.levels:
+                # level does not exist, adding id and level dataclass
+                building.levels[level_id] = Level(level_id=level_id, 
+                                                  level_name=level_name,
+                                                  level_elevation=level_elevation
+                                                  )
+        print(building.levels)
+                
 
-
-        # get the rooms
-        # get the unique level info for all the rooms (so need to check if level already exists)
-        # for each unique level id create a level 
         
 
     def process_doors(self, building: Building):
