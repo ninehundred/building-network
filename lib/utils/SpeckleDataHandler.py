@@ -11,7 +11,8 @@ class SpeckleDataHandler:
     # temporary measure to identify stair-well doors until speckle can load door data
     # these are the elementId parameters
     # needs a way of identifying door type
-    # 
+    # XXX: this needs to be a looking for a property or parameter in the door that denotes it as an exit door 
+    # XXX: need to find a way of figuring out what rooms are either side of a door to denote it as an exit door
     exit_doors = {"936092", "935699", "935389", "934706"}
 
     def __init__(self, data):
@@ -22,7 +23,7 @@ class SpeckleDataHandler:
     def process_levels(self, building:Building):
         for room in self.data["@Rooms"]:
             level_id = room.level.id
-            level_name = room.name
+            level_name = room.level.name
             level_elevation = room.level.elevation
             if level_id not in building.levels:
                 # level does not exist, adding id and level dataclass
@@ -30,11 +31,7 @@ class SpeckleDataHandler:
                                                   level_name=level_name,
                                                   level_elevation=level_elevation
                                                   )
-        print(building.levels)
                 
-
-        
-
     def process_doors(self, building: Building):
         for door in self.doors:
 
@@ -88,22 +85,27 @@ class SpeckleDataHandler:
 
     def process_rooms(self, building: Building):
         for room in self.rooms:
+            # TODO: this function needs to be rebuilt to take voids.
             coordinates = []
             segments = room.outline['segments']
             for n, segment in enumerate(segments):
-                coordinates.append([segment.start.x, segment.start.y])
-
+                coordinates.append([segment.start.x, segment.start.y, segment.start.z])
+            
             polygon = Polygon(coordinates)
-            cntrd = polygon.centroid
-            centroid = [cntrd.x, cntrd.y]
-            building.rooms.append(
-                Room(
-                    # room_id= TODO: get the room ID from speckle - should be some sort of GUID
-                    coordinates=coordinates,
-                    centroid=centroid,
-                    number=room.number,
-                    level=room.level.name,
-                    polygon=polygon
-                )
-            )
+            room_centre_point = [polygon.centroid.x, polygon.centroid.y]
+            
+            for level_id, level in building.levels.items():
+                if level_id == room.level.id:
+                    building.levels[room.level.id].rooms.append(
+                        Room(
+                            room_id = room.parameters.id,
+                            room_coordinates = coordinates,
+                            room_centre_point = room_centre_point,
+                            room_number = room.number,
+                            associated_level = room.level.id,
+                            polygon = polygon
+                        )
+                    )
+
+            
         

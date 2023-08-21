@@ -4,11 +4,21 @@ from shapely import Polygon
 
 @dataclass
 class Room:
-    coordinates: field(default_factory=list)
-    centroid: field(default_factory=list)
-    room_id: str = ''
-    number: str = ''
-    level: str = ''
+    """
+    Data class representing the geometry and properties of a room. 
+    This object should be placed on a level within a building
+    """
+    room_id: str = field(default_factory=str)
+    room_coordinates: list = field(default_factory=list)
+    room_centre_point: list = field(default_factory=list)
+    room_number: str = field(default_factory=str)
+    associated_level: str = field(default_factory=str)
+    occupancy: int = field(default_factory=int)
+    # TODO: fire resistance requirement
+    # TODO: ancillary type
+    # TODO: risk profile
+    # TODO: floor space factor 
+
     polygon: Polygon = Polygon()
     start: bool = False
 
@@ -32,8 +42,10 @@ class Door:
 # WIP: renamed to Level as floor is an object that should be associated with a level
 @dataclass
 class Level:
-    #  WIP: added the room dataclass and the doors dataclass to the floor dataclass
-    #   for better heirarchical structure of the over all dataclass
+    """
+    Dataclass representing a level on a building. Not to be mistaken with a floor.
+    A level hosts various other objects such as rooms and doors.
+    """
     level_id: str = field(default_factory=str)
     level_name: str = field(default_factory=str)
     level_elevation: str = field(default_factory=str)
@@ -44,9 +56,9 @@ class Level:
 
 @dataclass
 class Building:
-    # WIP: updated floors instance variable to a dict containing a 
-    #  string of the floor id and then the floor object itself
-    #  NOTE: the floor id should be a string represented by a GUID
+    """
+    Dataclass representing a building. This will host levels.
+    """
     levels: dict[str, Level] = field(default_factory=dict)
     id: str = ''
     
