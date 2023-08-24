@@ -5,8 +5,8 @@ from shapely import Polygon
 @dataclass
 class Room:
     """
-    Data class representing the geometry and properties of a room. 
-    This object should be placed on a level within a building
+    Dataclass representing the geometry and properties of a room. 
+    This object should be placed on a level within a building.
     """
     room_id: str = field(default_factory=str)
     room_coordinates: list = field(default_factory=list)

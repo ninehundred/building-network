@@ -7,12 +7,6 @@ from shapely import Polygon
 
 class SpeckleDataHandler:
     door_tolerance = 10
-
-    # temporary measure to identify stair-well doors until speckle can load door data
-    # these are the elementId parameters
-    # needs a way of identifying door type
-    # XXX: this needs to be a looking for a property or parameter in the door that denotes it as an exit door 
-    # XXX: need to find a way of figuring out what rooms are either side of a door to denote it as an exit door
     exit_doors = {"936092", "935699", "935389", "934706"}
 
     def __init__(self, data):
@@ -33,7 +27,13 @@ class SpeckleDataHandler:
                                                   )
                 
     def process_doors(self, building: Building):
+
         for door in self.doors:
+            # TODO: need to think about how we generate the geometry from the door
+            #       this looks like it might need to be some sort of bounding box 
+            point_coordinates = [door.displayValue[0].vertices[i:i+3] for i in range(0, len(door.displayValue[0].vertices), 3)]
+
+            # TODO: add facingFlipped and handFlipped as one of the door properties - this could help us figure out which way the door is facing
 
             # flatten x,y,z data to get door perimeter
             coordinates = []
@@ -43,8 +43,8 @@ class SpeckleDataHandler:
             width = door.parameters.FURNITURE_WIDTH.value
             # XXX: we need to get the host wall ID also and its thickness
             # which means we need to import the wall data too
-            depth = 120
-            offset = width/2
+            depth = 120 # TODO: this should come from a property of the host wall.
+            offset = width/2 #TODO: this should come from a parameter 'clear width'
 
             # TODO: check if there is a convex hull method
             # XXX: shapely has a convex hull method
@@ -59,8 +59,8 @@ class SpeckleDataHandler:
             upper_centroid = shapely.affinity.rotate(upper_centroid, door.rotation, use_radians=True, origin=(x, y, z))
             lower_centroid = shapely.affinity.rotate(lower_centroid, door.rotation, use_radians=True, origin=(x, y, z))
 
-            # XXX: need function here to check if there is anything to do with fire exit (some kind of fuzzy search?)
-            # XXX: OR the door should be an exit if it has a stair as one of its adjacent rooms
+            # TODO : add some kind of search to look in the parameters for anything to do with 'exit type'
+            #       and replace the _type property below
             _type = "norm"
             if door["elementId"] in self.exit_doors:
                 _type = "exit"
@@ -68,20 +68,22 @@ class SpeckleDataHandler:
             polygon = Polygon(coordinates)
             polygon = shapely.affinity.rotate(polygon, door.rotation, use_radians=True, origin='centroid')
 
-            building.doors.append(
-                Door(
-                    coordinates=coordinates,
-                    # XXX: this should be the level ID to ensure we're associated with the correct level
-                    level=door.level.name,
-                    rotation=door.rotation,
-                    centroid=[x, y, z],
-                    type=_type,
-                    polygon=polygon,
-                    upper_centroid=[upper_centroid.x, upper_centroid.y],
-                    lower_centroid=[lower_centroid.x, lower_centroid.y]
 
-                )
-            )
+            for level_id in building.levels.keys():
+                if door.level.id == level_id:
+                    building.levels[door.level.id].doors.append(
+                        Door(
+                            coordinates=coordinates,
+                            level=door.level.id,
+                            rotation=door.rotation,
+                            centroid=[x, y, z],
+                            type=_type,
+                            polygon=polygon,
+                            upper_centroid=[upper_centroid.x, upper_centroid.y],
+                            lower_centroid=[lower_centroid.x, lower_centroid.y]
+
+                        )
+                    )
 
     def process_rooms(self, building: Building):
         for room in self.rooms:
@@ -94,7 +96,7 @@ class SpeckleDataHandler:
             polygon = Polygon(coordinates)
             room_centre_point = [polygon.centroid.x, polygon.centroid.y]
             
-            for level_id, level in building.levels.items():
+            for level_id in building.levels.keys():
                 if level_id == room.level.id:
                     building.levels[room.level.id].rooms.append(
                         Room(
@@ -106,6 +108,4 @@ class SpeckleDataHandler:
                             polygon = polygon
                         )
                     )
-
-            
-        
+    

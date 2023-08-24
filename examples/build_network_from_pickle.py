@@ -12,22 +12,17 @@ def main():
     with open(r"examples\building_data.pkl", 'rb') as read:
         data = pickle.load(read)
 
+    # Create a building object class with all required data
     building_01_obj = Building()
     speckle_data_handler = SpeckleDataHandler(data)
-
-    # TODO: need to build a data checker that reviews if all params and properties are present and exits if not
     speckle_data_handler.process_levels(building_01_obj)
-
-    # TODO: ensure the rooms and doors are then placed on levels
-
-    # XXX: will the below look more like speckle_data_handler.levels.process_rooms(level)
-    #  will probably have to iterate over the levels and then process the associated
     speckle_data_handler.process_rooms(building_01_obj)
+    speckle_data_handler.process_doors(building_01_obj)
 
-    # speckle_data_handler.process_doors(building_01_obj)
+    # XXX: might start looking a bit different from here as the level will need to be an ID.
+    # XXX: may have to start looking into a basic front end here to display all level info in drop down menu or something
 
     # building_network = BuildNetwork(building=building, level="02")
-
     # building_network.add_door_centroids()
     # building_network.add_room_coordinates()
     # building_network.compute_all_edges()
