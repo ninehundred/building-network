@@ -31,8 +31,12 @@ def get_cutter(doors: list[Polygon], rooms: list[Polygon]):
 
 
 def construct_cutter(building: Building, floor_label: str):
+    # XXX: should a cutter object be created and cached for each level instead of one level at a time?
     doors = []
     rooms = []
+
+    # get the level whose ID matches the incoming ID
+
     for room in building.rooms:
         if room.level == floor_label:
             rooms.append(room.polygon)

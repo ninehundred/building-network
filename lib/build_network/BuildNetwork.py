@@ -8,12 +8,14 @@ from lib.models.Building import Building, Room, Door
 from lib.utils.geometries import construct_cutter
 from lib.utils.tools import plot_any
 
-from dataclasses import field
+# from dataclasses import field
 
 
 class BuildNetwork:
 
     def __init__(self, building: Building, level: str):
+        # XXX: is it better to build the whole nextwork or do it per level like we're doing now?
+        # XXX: is it possible to cache the paths after I've drawn them?
         self.edge_graph: nx.Graph
         self.building = building
         self.graph = nx.Graph()
